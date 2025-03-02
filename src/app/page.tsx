@@ -29,7 +29,7 @@ export default function Home() {
           </div>
 
           <div className="hidden lg:flex lg:gap-x-6">
-            <a href="#" className="text-sm font-semibold text-gray-300 hover:text-green-400 transition">Games</a>
+            <a href="/games" className="text-sm font-semibold text-gray-300 hover:text-green-400 transition">Games</a>
             <a href="#" className="text-sm font-semibold text-gray-300 hover:text-green-400 transition">Leaderboard</a>
             <a href="#" className="text-sm font-semibold text-gray-300 hover:text-green-400 transition">Docs</a>
           </div>
