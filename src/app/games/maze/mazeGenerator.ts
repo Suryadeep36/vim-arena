@@ -46,7 +46,7 @@ export type Grid = {
   
     function createMaze(i: number, j: number) {
       isVisited[i][j] = true;
-      let directions = [...options].sort(() => Math.random() - 0.5); // Shuffle directions
+      let directions = [...options].sort(() => Math.random() - 0.5); 
   
       for (const [di, dj] of directions) {
         let newI = i + di;
