@@ -46,11 +46,11 @@ export type Grid = {
   
     function createMaze(i: number, j: number) {
       isVisited[i][j] = true;
-      let directions = [...options].sort(() => Math.random() - 0.5); 
+      const directions = [...options].sort(() => Math.random() - 0.5); 
   
       for (const [di, dj] of directions) {
-        let newI = i + di;
-        let newJ = j + dj;
+        const newI = i + di;
+        const newJ = j + dj;
         if (newI >= 0 && newI < SIZE && newJ >= 0 && newJ < SIZE && !isVisited[newI][newJ]) {
           connectBothGrid(i, j, newI, newJ);
           createMaze(newI, newJ);

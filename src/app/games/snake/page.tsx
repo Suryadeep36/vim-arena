@@ -38,14 +38,14 @@ export default function SnakeGame() {
     if (!isGameRunning) return;
 
     setSnake((prev) => {
-      let newHead = { ...prev[0] };
+      const newHead = { ...prev[0] };
 
       if (direction === "left") newHead.x = validatePosition(newHead.x - 10);
       if (direction === "right") newHead.x = validatePosition(newHead.x + 10);
       if (direction === "up") newHead.y = validatePosition(newHead.y - 10);
       if (direction === "down") newHead.y = validatePosition(newHead.y + 10);
 
-      let newSnake = [newHead, ...prev];
+      const newSnake = [newHead, ...prev];
 
       if (newHead.x === foodPosition.x && newHead.y === foodPosition.y) {
         setScore((prevScore) => prevScore + 1);

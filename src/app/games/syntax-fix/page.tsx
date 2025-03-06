@@ -1,10 +1,7 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
-import Editor, { DiffEditor, useMonaco, loader } from '@monaco-editor/react';
-//@ts-ignore
-import { initVimMode } from "monaco-vim";
-
+import { useEffect, useState } from "react";
+import Editor from '@monaco-editor/react';
 export default function SnakeGame() {
   const [score, setScore] = useState(0);
   const [highScore, setHighScore] = useState(0);
@@ -19,21 +16,27 @@ export default function SnakeGame() {
     }  
   }  
   `);
-  const editorRef = useRef<any>(null);
-  const statusBarRef = useRef<HTMLDivElement>(null);
-  const monaco = useMonaco();
+  const handleKey = (e: KeyboardEvent) => {
+    if (!isGameRunning) return;
+    const key = e.key.toLowerCase();
+    if (key === "h") console.log("left");
+    else if (key === "j") console.log("down");
+    else if (key === "k") console.log("up");
+    else if (key === "l") console.log("right");
+  };
 
   const startGame = () => {
     setIsGameRunning(true);
+    setHighScore(0);
     setScore(0);
   };
 
   useEffect(() => {
-    if (editorRef.current && monaco) {
-      const vimMode = initVimMode(editorRef.current, statusBarRef.current);
-      return () => vimMode.dispose(); 
-    }
-  }, [monaco]);
+    window.addEventListener("keydown", handleKey);
+    return () => {
+      window.removeEventListener("keydown", handleKey);
+    };
+  }, [isGameRunning]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-white flex flex-col md:flex-row items-center justify-center p-6 space-y-8 md:space-y-0 md:space-x-10">
@@ -69,23 +72,22 @@ export default function SnakeGame() {
         </button>
       </div>
       <div className="relative w-[600px] h-[600px] bg-black border-4 border-green-500 rounded-lg shadow-lg">
-        <Editor
-          className="w-full h-full"
-          defaultLanguage="javascript"
-          theme="vs-dark"
-          value={code}
-          onChange={(newValue) => setCode(newValue || "")}
-          options={{
-            fontSize: 18,      
-            wordWrap: "on",      
-            minimap: { enabled: false }, 
-            scrollBeyondLastLine: false,
-            automaticLayout: true,  
-            formatOnPaste: true,  
-            formatOnType: true,
-          }}
-        />
-        <div ref={statusBarRef} className="text-green-400 mt-2 text-lg font-semibold"></div>
+      <Editor
+  className="w-full h-full"
+  defaultLanguage="javascript"
+  theme="vs-dark"
+  value={code}
+  onChange={(newValue) => setCode(newValue || "")}
+  options={{
+    fontSize: 18,        // Bigger font size for readability
+    wordWrap: "on",      // Enables text wrapping
+    minimap: { enabled: false }, // Hide minimap for more space
+    scrollBeyondLastLine: false, // Avoid unnecessary scrolling
+    automaticLayout: true,  // Adjusts layout automatically
+    formatOnPaste: true,    // Auto-format when pasting
+    formatOnType: true,     // Auto-format while typing
+  }}
+/>
       </div>
     </div>
   );
